@@ -1,24 +1,23 @@
-import express from "express";
-import { json } from "body-parser";
-import { router } from "./Api/Routes";
 import mongoose from "mongoose";
-
-const app = express();
-app.use(json());
-
-app.use(router);
+import { app, logger } from "./app";
+import DatabaseConnectionError from "./Error/DatabaseConnectionErrors";
 
 const start = async () => {
+  if (process.env.MONGO_URI) throw new DatabaseConnectionError();
+
+  if (process.env.AUTH_PORT) throw new Error("AUTH_PORT must be defined");
+
   try {
     await mongoose.connect(process.env.MONGO_URI!);
-    console.log("AUTH DB: CONNECTED");
+
+    logger.info("AUTH DB: CONNECTED");
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 
-  app.listen(process.env.AUTH_PORT, () =>
-    console.log(`AUTH SERVICE: LIVE ON ${process.env.AUTH_PORT}`)
-  );
+  app.listen(process.env.AUTH_PORT, () => {
+    logger.info(`AUTH SERVICE: LIVE ON ${process.env.AUTH_PORT}`);
+  });
 };
 
 start();
