@@ -2,13 +2,15 @@ import { Router } from "express";
 import { currentUser } from "../Controllers/CurrentUser";
 import { signIn } from "../Controllers/SignIn";
 import { signUp } from "../Controllers/SignUp";
+import { validateAuth } from "../../Validate";
+import { validateRequest } from "../../Middleware/ValidateRequest";
 
 const router = Router();
 
-router.get("/api/users/currentuser", currentUser);
+router.get("/currentuser", currentUser);
 
-router.post("/api/users/signup", signUp);
+router.post("/signup", validateAuth, validateRequest, signUp);
 
-router.post("/api/users/signin", signIn);
+router.post("/signin", validateAuth, validateRequest, signIn);
 
 export { router };

@@ -1,5 +1,6 @@
 import express from "express";
 import { json } from "body-parser";
+import "express-async-errors";
 import { router } from "./Api/Routes";
 import { errorHandler } from "./Middleware/ErrorHandler";
 
@@ -8,6 +9,7 @@ import {
   ConsoleTransport,
   createLoggerMiddleware,
 } from "@voskan/context-aware-logger";
+import { NotFoundError } from "./Error/NotFoundError";
 
 const app = express();
 
@@ -18,7 +20,11 @@ app.use(json());
 
 app.use(createLoggerMiddleware(logger));
 
-app.use(router);
+app.use("/api/users", router);
+
+app.all("*", async () => {
+  throw new NotFoundError();
+});
 
 app.use(errorHandler);
 
