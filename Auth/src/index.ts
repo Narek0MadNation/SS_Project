@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { app, logger } from "./app";
-import DatabaseConnectionError from "./Error/DatabaseConnectionErrors";
+import { DatabaseConnectionError } from "@madhead_og/common";
 
 const start = async () => {
   if (!process.env.MONGO_URI) throw new DatabaseConnectionError();

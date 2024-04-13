@@ -3,7 +3,7 @@ import { currentUser } from "../Controllers/CurrentUser";
 import { signIn } from "../Controllers/SignIn";
 import { signUp } from "../Controllers/SignUp";
 import { validateAuth } from "../../Validate";
-import { validateRequest } from "../../Middleware/ValidateRequest";
+import { validateRequest } from "@madhead_og/common";
 
 const router = Router();
 

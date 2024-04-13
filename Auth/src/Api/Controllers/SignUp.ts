@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { sign } from "jsonwebtoken";
+
 import User from "../../Model/UserModel";
 
 export const signUp = async (req: Request, res: Response) => {
@@ -10,9 +12,18 @@ export const signUp = async (req: Request, res: Response) => {
     if (existingUser) {
       return res.status(400).json({ message: "Email is already in use" });
     }
-    const user = await User.build({ email, password }).save();
+    const user = User.build({ email, password });
+    await user.save();
 
-    return res.status(201).json({ user });
+    const token = sign(
+      {
+        id: user._id,
+        email: user.email,
+      },
+      "txavari_bard_key"
+    );
+
+    return res.status(201).json({ token });
   } catch (error) {
     console.error(error);
   }

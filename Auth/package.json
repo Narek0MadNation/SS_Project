@@ -12,14 +12,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@madhead_og/common": "^1.0.7",
     "@voskan/context-aware-logger": "^1.0.21",
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",
     "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.12.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
