@@ -24,6 +24,14 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: multi-author-blog/posts-comment
+      context: postscomment
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
 portForward:
   - resourceType: Service
     resourceName: auth-srv
@@ -33,3 +41,7 @@ portForward:
     resourceName: posts-srv
     port: 4040
     localPort: 4040
+  - resourceType: Service
+    resourceName: posts-comment-srv
+    port: 4060
+    localPort: 4060
