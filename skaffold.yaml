@@ -16,8 +16,20 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: multi-author-blog/posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
 portForward:
   - resourceType: Service
     resourceName: auth-srv
     port: 4000
     localPort: 4000
+  - resourceType: Service
+    resourceName: posts-srv
+    port: 4040
+    localPort: 4040
