@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { sign } from "jsonwebtoken";
 
 import User from "../../Model/UserModel";
+import { BadRequestError } from "@madhead_og/common";
 
 export const signUp = async (req: Request, res: Response) => {
   try {
@@ -10,7 +11,7 @@ export const signUp = async (req: Request, res: Response) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return res.status(400).json({ message: "Email is already in use" });
+      throw new BadRequestError("Email in use");
     }
     const user = User.build({ email, password });
     await user.save();
@@ -20,11 +21,11 @@ export const signUp = async (req: Request, res: Response) => {
         id: user._id,
         email: user.email,
       },
-      "txavari_bard_key"
+      process.env.JWT_KEY!
     );
 
     return res.status(201).json({ token });
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 };

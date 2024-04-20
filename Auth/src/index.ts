@@ -7,6 +7,8 @@ const start = async () => {
 
   if (!process.env.AUTH_PORT) throw new Error("AUTH_PORT must be defined");
 
+  if (!process.env.JWT_KEY) throw new Error("JWT_KEY must be defined");
+
   try {
     await mongoose.connect(process.env.MONGO_URI!);
 
