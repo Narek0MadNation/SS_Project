@@ -17,9 +17,14 @@ spec:
           image: multi-author-blog/Posts
           env:
             - name: POSTS_PORT
-              value: "4040"
+              value: "4001"
             - name: MONGO_URI
               value: "mongodb://posts-mongo-srv:27017/posts"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
 ---
 apiVersion: v1
 kind: Service
@@ -31,5 +36,5 @@ spec:
   ports:
     - name: posts
       protocol: TCP
-      port: 4040
-      targetPort: 4040
+      port: 4001
+      targetPort: 4001

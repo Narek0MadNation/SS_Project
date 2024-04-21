@@ -23,11 +23,11 @@ spec:
               service:
                 name: posts-srv
                 port:
-                  number: 4040
+                  number: 4001
           - path: /api/comments/?(.*)
             pathType: ImplementationSpecific
             backend:
               service:
                 name: posts-comment-srv
                 port:
-                  number: 4060
+                  number: 4002

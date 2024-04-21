@@ -1,27 +1,16 @@
 import { NextFunction, Request, Response } from "express";
-import { verify } from "jsonwebtoken";
+import { NotFoundError } from "@madhead_og/common";
 
-export const currentUser = async (
+export const currentUserController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  try {
-    if (
-      !req.headers.authorization ||
-      !req.headers.authorization.startsWith("Bearer ")
-    ) {
-      return next();
-    }
+  const user = req.currentUser;
 
-    const token = req.headers.authorization.split(" ")[1];
-
-    const payload = verify(token, process.env.JWT_KEY!);
-
-    if (!payload) return next();
-
-    return res.json(payload);
-  } catch (error) {
-    throw error;
+  if (!user) {
+    throw new NotFoundError();
   }
+
+  return res.send({ currentUser: user });
 };

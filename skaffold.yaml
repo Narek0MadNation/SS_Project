@@ -39,9 +39,9 @@ portForward:
     localPort: 4000
   - resourceType: Service
     resourceName: posts-srv
-    port: 4040
-    localPort: 4040
+    port: 4001
+    localPort: 4001
   - resourceType: Service
     resourceName: posts-comment-srv
-    port: 4060
-    localPort: 4060
+    port: 4002
+    localPort: 4002

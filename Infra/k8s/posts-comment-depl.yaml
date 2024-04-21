@@ -17,7 +17,7 @@ spec:
           image: multi-author-blog/posts-comment
           env:
             - name: POSTS_COMMENT_PORT
-              value: "4060"
+              value: "4002"
             - name: MONGO_URI
               value: "mongodb://posts-comment-mongo-srv:27017/posts-comment"
 ---
@@ -31,5 +31,5 @@ spec:
   ports:
     - name: posts-comment
       protocol: TCP
-      port: 4060
-      targetPort: 4060
+      port: 4002
+      targetPort: 4002
