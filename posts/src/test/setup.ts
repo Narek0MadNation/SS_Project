@@ -1,3 +1,4 @@
+import { sign } from "jsonwebtoken";
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
 
@@ -29,3 +30,14 @@ afterAll(async () => {
   await mongo.stop();
   await mongoose.connection.close();
 });
+
+global.signin = (id?: string) => {
+  const payload = {
+    id: id || new mongoose.Types.ObjectId().toHexString(),
+    email: "pC5G0@example.com",
+  };
+
+  const token = sign(payload, process.env.JWT_KEY!);
+
+  return `Bearer ${token}`;
+};

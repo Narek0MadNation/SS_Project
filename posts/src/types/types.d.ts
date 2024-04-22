@@ -11,4 +11,12 @@ declare global {
       currentUser: UserPayload;
     }
   }
+
+  namespace NodeJS {
+    interface Global {
+      signin(id?: string): string;
+    }
+  }
+
+  var signin: (id?: string) => string;
 }

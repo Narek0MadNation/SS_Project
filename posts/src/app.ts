@@ -9,6 +9,7 @@ import {
 } from "@voskan/context-aware-logger";
 import { NotFoundError, errorHandler } from "@madhead_og/common";
 import { createPostRouter } from "./routes/new";
+import { showPostRouter } from "./routes/show";
 
 const app = express();
 
@@ -18,6 +19,7 @@ logger.addTransport(new ConsoleTransport());
 app.use(json());
 
 app.use(createPostRouter);
+app.use(showPostRouter);
 
 app.use(createLoggerMiddleware(logger));
 
