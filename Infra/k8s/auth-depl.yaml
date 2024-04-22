@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: multi-author-blog/Auth
+          image: multi-author-blog/auth
           env:
             - name: AUTH_PORT
               value: "4000"
