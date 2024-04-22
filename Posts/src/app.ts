@@ -8,7 +8,7 @@ import {
   createLoggerMiddleware,
 } from "@voskan/context-aware-logger";
 import { NotFoundError, errorHandler } from "@madhead_og/common";
-import { createPostRouter } from "./Routes/new";
+import { createPostRouter } from "./routes/new";
 
 const app = express();
 

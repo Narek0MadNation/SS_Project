@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { BadRequestError } from "@madhead_og/common";
-import { Password } from "../../Service/Password";
-import User from "../../Model/UserModel";
+import { Password } from "../../service/password";
+import User from "../../model/userModel";
 
 export const signIn = async (req: Request, res: Response) => {
   try {

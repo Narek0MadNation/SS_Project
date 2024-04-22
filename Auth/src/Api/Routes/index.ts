@@ -1,9 +1,9 @@
 import { Router } from "express";
 import { currentUser, validateRequest } from "@madhead_og/common";
-import { currentUserController } from "../Controllers/CurrentUser";
-import { signIn } from "../Controllers/SignIn";
-import { signUp } from "../Controllers/SignUp";
-import { validateAuth } from "../../Validate";
+import { currentUserController } from "../controllers/currentUser";
+import { signUp } from "../controllers/signUp";
+import { signIn } from "../controllers/signIn";
+import { validateAuth } from "../../validate";
 
 const router = Router();
 

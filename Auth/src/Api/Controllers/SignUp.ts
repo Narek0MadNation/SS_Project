@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { sign } from "jsonwebtoken";
 import { BadRequestError } from "@madhead_og/common";
-import User from "../../Model/UserModel";
+import User from "../../model/userModel";
 
 export const signUp = async (req: Request, res: Response) => {
   try {

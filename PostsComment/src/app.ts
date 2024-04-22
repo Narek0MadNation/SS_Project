@@ -1,7 +1,7 @@
 import express from "express";
 import { json } from "body-parser";
 import "express-async-errors";
-import { router } from "./Api/Routes";
+import { router } from "./api/routes";
 
 import {
   Logger,
