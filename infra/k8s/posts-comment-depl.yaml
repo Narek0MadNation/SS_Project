@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-comment-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts-comment
+  template:
+    metadata:
+      labels:
+        app: posts-comment
+    spec:
+      containers:
+        - name: posts-comment
+          image: multi-author-blog/posts-comment
+          env:
+            - name: POSTS_COMMENT_PORT
+              value: "4002"
+            - name: MONGO_URI
+              value: "mongodb://posts-comment-mongo-srv:27017/posts-comment"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-comment-srv
+spec:
+  selector:
+    app: posts-comment
+  ports:
+    - name: posts-comment
+      protocol: TCP
+      port: 4002
+      targetPort: 4002
