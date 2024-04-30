@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nats-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nats
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: nats
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+      volumes:
+        - name: nats-storage
+          persistentVolumeClaim:
+            claimName: nats-storage-pvc
+      containers:
+        - name: nats
+          image: nats:2.10.14-alpine3.19
+          volumeMounts:
+            - name: nats-storage
+              mountPath: /data/nats
+          env:
+            - name: NATS_SERVER_URL
+              value: "nats://localhost:30022"
+            - name: NATS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: nats-secret
+                  key: token
+          args:
+            - "-js"
+            - "-m"
+            - "8222"
+            - "-p"
+            - "4222"
+            - "--store_dir"
+            - "/data/nats"
+            # - "--auth"
+            # - "${NATS_TOKEN}"
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+          livenessProbe:
+            httpGet:
+              path: "/"
+              port: 8222
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: 8222
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nats-srv
+spec:
+  type: NodePort
+  selector:
+    app: nats
+  ports:
+    - name: client
+      protocol: TCP
+      port: 4222
+      targetPort: 4222
+      nodePort: 30022
+    - name: monitoring
+      protocol: TCP
+      port: 8222
+      targetPort: 8222
+      nodePort: 30023
