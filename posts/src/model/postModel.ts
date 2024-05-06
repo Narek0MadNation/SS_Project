@@ -1,4 +1,4 @@
-import { model, Model, Schema, Document, Types } from "mongoose";
+import { model, Model, Schema, Document } from "mongoose";
 
 interface PostAttrs {
   userId: string;

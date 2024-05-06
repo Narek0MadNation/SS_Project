@@ -31,3 +31,10 @@ spec:
                 name: posts-comment-srv
                 port:
                   number: 4002
+          - path: /api/qa/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: qa-srv
+                port:
+                  number: 4003

@@ -32,6 +32,14 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: multi-author-blog/qa
+      context: qa
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
 portForward:
   - resourceType: Service
     resourceName: auth-srv
@@ -45,3 +53,7 @@ portForward:
     resourceName: posts-comment-srv
     port: 4002
     localPort: 4002
+  - resourceType: Service
+    resourceName: qa-srv
+    port: 4003
+    localPort: 4003

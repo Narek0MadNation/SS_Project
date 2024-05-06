@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qa-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qa-mongo
+  template:
+    metadata:
+      labels:
+        app: qa-mongo
+    spec:
+      containers:
+        - name: qa-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qa-mongo-srv
+spec:
+  selector:
+    app: qa-mongo
+  ports:
+    - name: qa-mongo
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

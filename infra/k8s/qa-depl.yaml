@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qa-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qa
+  template:
+    metadata:
+      labels:
+        app: qa
+    spec:
+      containers:
+        - name: qa
+          image: multi-author-blog/qa
+          env:
+            - name: QA_PORT
+              value: "4003"
+            - name: MONGO_URI
+              value: "mongodb://qa-mongo-srv:27017/qa"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qa-srv
+spec:
+  selector:
+    app: qa
+  ports:
+    - name: qa
+      protocol: TCP
+      port: 4003
+      targetPort: 4003
