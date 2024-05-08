@@ -4,7 +4,6 @@ interface QuestionAttrs {
   userId: string;
   title: string;
   content: string;
-  answers: string;
 }
 
 interface QuestionDoc extends Document {
@@ -30,6 +29,7 @@ const questionSchema = new Schema(
       transform(doc, ret) {
         ret.id = ret._id;
         delete ret._id;
+        delete ret.__v;
       },
     },
   }
