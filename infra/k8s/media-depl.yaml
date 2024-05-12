@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: media-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: media
+  template:
+    metadata:
+      labels:
+        app: media
+    spec:
+      containers:
+        - name: media
+          image: multi-author-blog/media
+          env:
+            - name: MEDIA_PORT
+              value: "4004"
+            - name: MONGO_URI
+              value: "mongodb://media-mongo-srv:27017/media"
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: media-srv
+spec:
+  selector:
+    app: media
+  ports:
+    - name: media
+      protocol: TCP
+      port: 4004
+      targetPort: 4004

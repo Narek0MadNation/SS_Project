@@ -40,6 +40,14 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: multi-author-blog/media
+      context: media
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
 portForward:
   - resourceType: Service
     resourceName: auth-srv
@@ -57,3 +65,7 @@ portForward:
     resourceName: qa-srv
     port: 4003
     localPort: 4003
+  - resourceType: Service
+    resourceName: media-srv
+    port: 4004
+    localPort: 4004

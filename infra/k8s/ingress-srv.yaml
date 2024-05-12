@@ -38,3 +38,10 @@ spec:
                 name: qa-srv
                 port:
                   number: 4003
+          - path: /api/media/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: media-srv
+                port:
+                  number: 4004

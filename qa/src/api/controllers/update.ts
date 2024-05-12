@@ -6,9 +6,11 @@ export const update = async (req: Request, res: Response) => {
   try {
     const { qaId } = req.params;
     const { title, content } = req.body;
+    console.log("Updating question with ID:", qaId);
 
     const question = await Question.findById(qaId);
 
+    console.log("UPDATE Question found:", question);
     if (!question) throw new NotFoundError();
 
     question.title = title;
