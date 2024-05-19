@@ -25,6 +25,16 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
+          volumeMounts:
+            - name: auth-pvc
+              mountPath: /data
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+      volumes:
+        - name: auth-pvc
+          persistentVolumeClaim:
+            claimName: auth-storage-pvc
 ---
 apiVersion: v1
 kind: Service

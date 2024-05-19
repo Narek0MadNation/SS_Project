@@ -1,43 +1,50 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: media-depl
+  name: file-management-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: media
+      app: file-management
   template:
     metadata:
       labels:
-        app: media
+        app: file-management
     spec:
       containers:
-        - name: media
-          image: multi-author-blog/media
+        - name: file-management
+          image: multi-author-blog/file-management
           env:
-            - name: MEDIA_PORT
+            - name: FILE_PORT
               value: "4004"
             - name: MONGO_URI
-              value: "mongodb://media-mongo-srv:27017/media"
+              value: "mongodb://file-management-mongo-srv:27017/file"
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
+          volumeMounts:
+            - name: file-pvc
+              mountPath: /data
       dnsConfig:
         nameservers:
           - 8.8.8.8
+      volumes:
+        - name: file-pvc
+          persistentVolumeClaim:
+            claimName: file-storage-pvc
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: media-srv
+  name: file-management-srv
 spec:
   selector:
-    app: media
+    app: file-management
   ports:
-    - name: media
+    - name: file-management
       protocol: TCP
       port: 4004
       targetPort: 4004

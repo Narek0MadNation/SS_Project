@@ -40,8 +40,8 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: multi-author-blog/media
-      context: media
+    - image: multi-author-blog/file-management
+      context: file-management
       docker:
         dockerfile: Dockerfile
       sync:
@@ -66,6 +66,6 @@ portForward:
     port: 4003
     localPort: 4003
   - resourceType: Service
-    resourceName: media-srv
+    resourceName: file-management-srv
     port: 4004
     localPort: 4004
